@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Daily Helper</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===== HEADER ===== -->
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-emoji">🌟</span>
+      <div>
+        <h1>Daily Helper</h1>
+        <p class="tagline">Teman kecil buat hari-harimu</p>
+      </div>
+    </div>
+    <div class="datetime-card" id="datetimeCard">
+      <span id="clockTime">--:--</span>
+      <span class="date-sep">•</span>
+      <span id="clockDate">-- --- ----</span>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="app-main" id="appMain">
+
+    <!-- ---------- DASHBOARD ---------- -->
+    <section class="page active" id="page-dashboard">
+      <h2 class="page-title">🏠 Dashboard</h2>
+      <div class="summary-grid">
+        <div class="summary-card card-tasks">
+          <span class="summary-icon">📝</span>
+          <div class="summary-num" id="sumTasks">0/0</div>
+          <div class="summary-label">Tugas hari ini</div>
+        </div>
+        <div class="summary-card card-checklist">
+          <span class="summary-icon">✅</span>
+          <div class="summary-num" id="sumChecklist">0/0</div>
+          <div class="summary-label">Checklist</div>
+        </div>
+        <div class="summary-card card-schedule">
+          <span class="summary-icon">📅</span>
+          <div class="summary-num" id="sumSchedule">-</div>
+          <div class="summary-label">Jadwal terdekat</div>
+        </div>
+        <div class="summary-card card-finance">
+          <span class="summary-icon">💰</span>
+          <div class="summary-num" id="sumBalance">Rp0</div>
+          <div class="summary-label">Saldo</div>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <h3>🔔 Notifikasi</h3>
+        <div class="notif-box" id="notifBoxDashboard">
+          <p id="notifStatusTextDashboard">Mengecek status...</p>
+          <button class="btn btn-primary" data-goto="notifikasi">Buka Halaman Notifikasi</button>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <h3>⏭️ Tugas Terdekat</h3>
+        <div id="dashboardUpcoming" class="mini-list">
+          <p class="empty-text">Belum ada tugas.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- TUGAS ---------- -->
+    <section class="page" id="page-tugas">
+      <h2 class="page-title">📝 Tugas</h2>
+      <form class="form-card" id="formTugas">
+        <label>Nama Tugas</label>
+        <input type="text" id="tugasNama" placeholder="Misal: Kerjakan laporan" required>
+        <div class="form-row">
+          <div class="form-col">
+            <label>Tanggal</label>
+            <input type="date" id="tugasTanggal" required>
+          </div>
+          <div class="form-col">
+            <label>Jam</label>
+            <input type="time" id="tugasJam" required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">+ Tambah Tugas</button>
+      </form>
+      <div class="list-container" id="listTugas">
+        <p class="empty-text">Belum ada tugas. Yuk tambahkan!</p>
+      </div>
+    </section>
+
+    <!-- ---------- JADWAL ---------- -->
+    <section class="page" id="page-jadwal">
+      <h2 class="page-title">📅 Jadwal</h2>
+      <form class="form-card" id="formJadwal">
+        <label>Nama Kegiatan</label>
+        <input type="text" id="jadwalNama" placeholder="Misal: Meeting tim" required>
+        <div class="form-row">
+          <div class="form-col">
+            <label>Tanggal</label>
+            <input type="date" id="jadwalTanggal" required>
+          </div>
+          <div class="form-col">
+            <label>Jam</label>
+            <input type="time" id="jadwalJam" required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">+ Tambah Jadwal</button>
+      </form>
+      <div class="filter-row">
+        <label for="jadwalFilterTanggal">Lihat tanggal:</label>
+        <input type="date" id="jadwalFilterTanggal">
+        <button class="btn btn-ghost btn-sm" id="jadwalFilterClear">Semua</button>
+      </div>
+      <div class="list-container" id="listJadwal">
+        <p class="empty-text">Belum ada jadwal.</p>
+      </div>
+    </section>
+
+    <!-- ---------- CHECKLIST ---------- -->
+    <section class="page" id="page-checklist">
+      <h2 class="page-title">✅ Checklist</h2>
+      <form class="form-card" id="formChecklist">
+        <label>Item Checklist</label>
+        <div class="inline-form">
+          <input type="text" id="checklistTeks" placeholder="Misal: Bawa payung" required>
+          <button type="submit" class="btn btn-primary">+ Tambah</button>
+        </div>
+      </form>
+      <div class="list-container" id="listChecklist">
+        <p class="empty-text">Checklist masih kosong.</p>
+      </div>
+    </section>
+
+    <!-- ---------- KEUANGAN ---------- -->
+    <section class="page" id="page-keuangan">
+      <h2 class="page-title">💰 Keuangan</h2>
+      <div class="finance-summary">
+        <div class="fin-box fin-in">
+          <span>Pemasukan</span>
+          <strong id="finTotalMasuk">Rp0</strong>
+        </div>
+        <div class="fin-box fin-out">
+          <span>Pengeluaran</span>
+          <strong id="finTotalKeluar">Rp0</strong>
+        </div>
+        <div class="fin-box fin-balance">
+          <span>Saldo</span>
+          <strong id="finSaldo">Rp0</strong>
+        </div>
+      </div>
+      <form class="form-card" id="formKeuangan">
+        <label>Jenis</label>
+        <div class="toggle-row">
+          <label class="toggle-opt">
+            <input type="radio" name="finTipe" value="masuk" checked>
+            <span>➕ Pemasukan</span>
+          </label>
+          <label class="toggle-opt">
+            <input type="radio" name="finTipe" value="keluar">
+            <span>➖ Pengeluaran</span>
+          </label>
+        </div>
+        <label>Nominal (Rp)</label>
+        <input type="number" id="finNominal" placeholder="Misal: 50000" min="0" required>
+        <label>Keterangan</label>
+        <input type="text" id="finKeterangan" placeholder="Misal: Jajan siang" required>
+        <button type="submit" class="btn btn-primary btn-block">+ Simpan Transaksi</button>
+      </form>
+      <div class="list-container" id="listKeuangan">
+        <p class="empty-text">Belum ada transaksi.</p>
+      </div>
+    </section>
+
+    <!-- ---------- CATATAN ---------- -->
+    <section class="page" id="page-catatan">
+      <h2 class="page-title">📒 Catatan</h2>
+      <form class="form-card" id="formCatatan">
+        <label>Tulis catatan baru</label>
+        <textarea id="catatanIsi" rows="3" placeholder="Tulis sesuatu..." required></textarea>
+        <button type="submit" class="btn btn-primary btn-block">+ Simpan Catatan</button>
+      </form>
+      <div class="list-container notes-grid" id="listCatatan">
+        <p class="empty-text">Belum ada catatan.</p>
+      </div>
+    </section>
+
+    <!-- ---------- NOTIFIKASI ---------- -->
+    <section class="page" id="page-notifikasi">
+      <h2 class="page-title">🔔 Notifikasi</h2>
+      <div class="section-block" style="margin-top:0;">
+        <div class="notif-box" id="notifBox">
+          <p id="notifStatusText">Mengecek dukungan browser...</p>
+          <button class="btn btn-primary btn-block" id="notifEnableBtn">Aktifkan Notifikasi</button>
+          <button class="btn btn-ghost btn-block hidden-el" id="notifDisableBtn">Nonaktifkan Notifikasi</button>
+        </div>
+      </div>
+      <div class="section-block">
+        <h3>➕ Buat Pengingat Baru</h3>
+        <form class="form-card" id="formPengingat">
+          <label>Nama Pengingat</label>
+          <input type="text" id="pengingatNama" placeholder="Misal: Tugas Matematika" required>
+          <div class="form-row">
+            <div class="form-col">
+              <label>Tanggal</label>
+              <input type="date" id="pengingatTanggal" required>
+            </div>
+            <div class="form-col">
+              <label>Jam</label>
+              <input type="time" id="pengingatJam" required>
+            </div>
+          </div>
+          <label>Pesan</label>
+          <textarea id="pengingatPesan" rows="2" placeholder="Misal: Jangan lupa mengerjakan tugas Matematika."></textarea>
+          <button type="submit" class="btn btn-primary btn-block">🔔 Simpan Pengingat</button>
+        </form>
+      </div>
+      <div class="section-block">
+        <h3>📋 Pengingat Terjadwal</h3>
+        <div class="list-container" id="listPengingat">
+          <p class="empty-text">Belum ada pengingat aktif.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== BOTTOM NAV ===== -->
+  <nav class="bottom-nav" id="bottomNav">
+    <button class="nav-btn active" data-page="dashboard"><span class="nav-icon">🏠</span><span>Dashboard</span></button>
+    <button class="nav-btn" data-page="tugas"><span class="nav-icon">📝</span><span>Tugas</span></button>
+    <button class="nav-btn" data-page="jadwal"><span class="nav-icon">📅</span><span>Jadwal</span></button>
+    <button class="nav-btn" data-page="checklist"><span class="nav-icon">✅</span><span>Checklist</span></button>
+    <button class="nav-btn" data-page="keuangan"><span class="nav-icon">💰</span><span>Uang</span></button>
+    <button class="nav-btn" data-page="catatan"><span class="nav-icon">📒</span><span>Catatan</span></button>
+    <button class="nav-btn" data-page="notifikasi"><span class="nav-icon">🔔</span><span>Notif</span></button>
+  </nav>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-overlay" id="editNoteOverlay">
+  <div class="modal-box">
+    <h3>Edit Catatan</h3>
+    <textarea id="editNoteTextarea" rows="5"></textarea>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="editNoteCancel">Batal</button>
+      <button class="btn btn-primary" id="editNoteSave">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

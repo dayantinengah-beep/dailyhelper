@@ -118,7 +118,7 @@ app.delete('/api/reminder/:id', (req, res) => {
 // ---------- PENJAGA WAKTU: cek tiap 20 detik, kirim push kalau sudah waktunya ----------
 async function checkAndSendReminders() {
   const now = Date.now();
-  const due = reminders.filter(r => !r.sentAt && new Date(`${r.tanggal}T${r.jam}:00`).getTime() <= now);
+  const due = reminders.filter(r => !r.sentAt && new Date(`${r.tanggal}T${r.jam}:00+07:00`).getTime() <= now);
   if (due.length === 0) return;
 
   for (const reminder of due) {
